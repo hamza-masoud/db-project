@@ -1,0 +1,58 @@
+version: '3'
+services:
+
+    #PHP Service
+    app:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        container_name: db_app
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "8000:8000"
+        environment:
+            SERVICE_NAME: app
+            SERVICE_TAGS: dev
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+        networks:
+            - db-app
+        links:
+            - postgres
+
+    #Nginx Service
+    webserver:
+        image: nginx:alpine
+        container_name: db_webserver
+        restart: unless-stopped
+#        tty: true
+        ports:
+            - "80:80"
+            - "443:443"
+        networks:
+            - db-app
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx:/etc/nginx/conf.d/
+        links:
+            - app
+
+    #MySQL Service
+    postgres:
+        image: postgres:9.5-alpine
+        container_name: db_postgres
+        environment:
+            - POSTGRES_USER=${DB_USERNAME}
+            - POSTGRES_PASSWORD=${DB_PASSWORD}
+            - POSTGRES_DB=${DB_DATABASE}
+        ports:
+            - "5432:5432"
+        networks:
+            - db-app
+
+#Docker Networks
+networks:
+    db-app:
+        driver: bridge
