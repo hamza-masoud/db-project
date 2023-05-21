@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('tutors', function (Blueprint $table) {
 			$table->string('name');
-			$table->string('phone')->unique();
+			$table->string('phone')->unique()->primary()->index();
 			$table->string('password');
             $table->timestamps();
         });

@@ -7,6 +7,7 @@ use App\Models\Tutor;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class TutorsController extends Controller
@@ -18,10 +19,7 @@ class TutorsController extends Controller
      */
     public function index()
     {
-        // Retrieve all tutors from the database
         $tutors = Tutor::all();
-
-        // Pass the tutors data to the view
         return view('pages.admin.tutors.index', compact('tutors'));
     }
 
@@ -32,7 +30,6 @@ class TutorsController extends Controller
      */
     public function create()
     {
-        // Show the create tutor form
         return view('pages.admin.tutors.create');
     }
 
@@ -40,27 +37,23 @@ class TutorsController extends Controller
      * Store a newly created tutor in the database.
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
-        // Validate the request data
-        $validatedData = $request->validate([
+        $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:tutors',
-            'phone' => 'required',
+            'phone' => 'required|unique:tutors',
+            'password' => 'required',
         ]);
 
-        // Create a new tutor instance
         $tutor = new Tutor();
         $tutor->name = $request->input('name');
-        $tutor->email = $request->input('email');
         $tutor->phone = $request->input('phone');
-
-        // Save the tutor to the database
+        $tutor->password = \Hash::make($request->input('phone'));
         $tutor->save();
+        $tutor->courses()->sync($request->input('course'));
 
-        // Redirect to the tutors index page with a success message
         return redirect()->route('admin.tutors.index')->with('success', 'Tutor created successfully.');
     }
 
@@ -72,10 +65,8 @@ class TutorsController extends Controller
      */
     public function edit($id)
     {
-        // Find the tutor by ID
-        $tutor = Tutor::find($id);
-
-        // Show the edit tutor form
+        $tutor = Tutor::findOrFail($id)->load('courses');
+        dd($tutor);
         return view('pages.admin.tutors.edit', compact('tutor'));
     }
 
@@ -84,42 +75,33 @@ class TutorsController extends Controller
      *
      * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function update(Request $request, $id)
     {
-        // Validate the request data
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:tutors,email,' . $id,
-            'phone' => 'required',
+        $request->validate([
+            'name' => 'required|string|max:200',
+            'course' => 'required|array|min:1',
+            'course.*' => 'required|integer|exists:courses,id',
         ]);
 
-        // Find the tutor by ID
-        $tutor = Tutor::find($id);
+        $tutor = Tutor::findOrFail($id);
         $tutor->name = $request->input('name');
-        $tutor->email = $request->input('email');
-        $tutor->phone = $request->input('phone');
-
-        // Save the updated tutor to the database
         $tutor->save();
 
-        // Redirect to the tutors index page with a success message
+        $tutor->courses()->sync($request->input('course'));
+
         return redirect()->route('admin.tutors.index')->with('success', 'Tutor updated successfully.');
     }
 
     /**
-     * Remove the specified tutor from the database.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function destroy($id)
     {
-        // Find the tutor by ID and delete it
         Tutor::destroy($id);
-
-        // Redirect to the tutors index page with a success message
         return redirect()->route('admin.tutors.index')->with('success', 'Tutor deleted successfully.');
     }
 }

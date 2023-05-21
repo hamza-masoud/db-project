@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class Tutor extends Authenticatable
 {
-	use HasFactory, HasApiTokens, Notifiable;
+	use HasFactory;
+    protected $primaryKey = "phone";
+    public $incrementing = false;
 
-	protected $hidden = [
+    protected $hidden = [
 		'password',
 	];
     protected $fillable = [
@@ -19,4 +20,9 @@ class Tutor extends Authenticatable
         'phone',
         'password',
     ];
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class,'teach', 'tutor_id', 'course_id');
+    }
 }

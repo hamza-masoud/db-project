@@ -10,12 +10,17 @@
                 <input type="text" name="name" class="form-control" id="name" required>
             </div>
             <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" id="email" required>
-            </div>
-            <div class="mb-3">
                 <label for="phone" class="form-label">Phone</label>
                 <input type="text" name="phone" class="form-control" id="phone" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="password" required>
+            </div>
+            <div class="form-group">
+                <label for="courses">Courses</label>
+                <select name="courses[]" multiple class="form-control select2-course">
+                </select>
             </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </form>

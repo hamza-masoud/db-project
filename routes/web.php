@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\TutorController;
+use App\Http\Controllers\Admin\Select2Controller;
 use App\Http\Controllers\Admin\TutorsController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,5 +28,7 @@ Route::prefix('admin')->as('admin.')->group(function (){
 
 
         Route::resource('tutors', TutorsController::class);
+        Route::get('/select2-courses', [Select2Controller::class, 'getCourses']);
+        Route::resource('courses', CourseController::class);
     });
 });
