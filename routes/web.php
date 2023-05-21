@@ -1,10 +1,8 @@
 <?php
 
-use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\Admin\CourseController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\Select2Controller;
-use App\Http\Controllers\Admin\TutorsController;
+
+use App\Http\Controllers\Admin;
+use App\Http\Controllers\Tutor;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,16 +17,30 @@ use Illuminate\Support\Facades\Route;
 */
 // admin routes
 Route::prefix('admin')->as('admin.')->group(function (){
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+    Route::get('/login', [Admin\AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [Admin\AuthController::class, 'login'])->name('login.submit');
 
     Route::middleware('auth:admin')->group(function (){
-        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-        Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+        Route::post('/logout', [Admin\AuthController::class, 'logout'])->name('logout');
+        Route::get('/dashboard', [Admin\DashboardController::class, 'dashboard'])->name('dashboard');
+
+        Route::resource('tutors', Admin\TutorsController::class);
+        Route::get('/select2-courses', [Admin\Select2Controller::class, 'getCourses']);
+        Route::resource('courses', Admin\CourseController::class);
+    });
+});
 
 
-        Route::resource('tutors', TutorsController::class);
-        Route::get('/select2-courses', [Select2Controller::class, 'getCourses']);
-        Route::resource('courses', CourseController::class);
+Route::prefix('tutor')->as('tutor.')->group(function (){
+    Route::get('/login', [Tutor\AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [Tutor\AuthController::class, 'login'])->name('login.submit');
+
+    Route::middleware('auth:tutor')->group(function (){
+        Route::post('/logout', [Tutor\AuthController::class, 'logout'])->name('logout');
+        Route::get('/dashboard', [Tutor\DashboardController::class, 'dashboard'])->name('dashboard');
+
+        Route::resource('student', Tutor\StudentsController::class);
+        Route::get('/select2-courses', [Tutor\Select2Controller::class, 'getCourses']);
+        Route::resource('lecture', Tutor\CourseController::class);
     });
 });

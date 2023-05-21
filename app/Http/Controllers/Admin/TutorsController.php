@@ -66,7 +66,6 @@ class TutorsController extends Controller
     public function edit($id)
     {
         $tutor = Tutor::findOrFail($id)->load('courses');
-        dd($tutor);
         return view('pages.admin.tutors.edit', compact('tutor'));
     }
 

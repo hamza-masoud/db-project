@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->string('id')->primary()->index();
             $table->string('full_name')->index();
-			$table->enum('gender', ['Male', 'Female']);
+			$table->string('gender');
             $table->timestamps();
         });
     }

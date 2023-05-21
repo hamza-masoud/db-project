@@ -1,25 +1,25 @@
-@extends('layout.admin')
+@extends('layout.tutor')
 
 @section('content')
     <div class="container">
-        <h1>Create Tutor</h1>
-        <form action="{{ route('admin.tutors.store') }}" method="POST">
+        <h1>Create Student</h1>
+        <form action="{{ route('tutor.student.store') }}" method="POST">
             @csrf
             <div class="mb-3">
+                <label for="id" class="form-label">ID</label>
+                <input type="text" name="id" class="form-control" id="id" required>
+            </div>
+            <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" name="name" class="form-control" id="name" required>
+                <input type="text" name="full_name" class="form-control" id="name" required>
             </div>
             <div class="mb-3">
                 <label for="phone" class="form-label">Phone</label>
                 <input type="text" name="phone" class="form-control" id="phone" required>
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" id="password" required>
-            </div>
-            <div class="form-group">
+            <div class="form-group my-2">
                 <label for="courses">Courses</label>
-                <select name="courses[]" multiple class="form-control select2-course">
+                <select id="courses" name="courses[]" multiple class="form-control select2-course">
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Create</button>

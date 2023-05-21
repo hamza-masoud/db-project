@@ -1,4 +1,4 @@
-@extends('layout.admin')
+@extends('layout.tutor')
 
 @section('content')
     <h1>Edit Course</h1>
@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.courses.update', $course) }}" method="POST">
+    <form action="{{ route('tutor.lecture.update', $course) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="form-group">

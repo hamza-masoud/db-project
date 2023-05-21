@@ -1,9 +1,9 @@
-@extends('layout.admin')
+@extends('layout.tutor')
 
 @section('content')
     <h1>Create Course</h1>
 
-    <form action="{{ route('admin.courses.store') }}" method="POST">
+    <form action="{{ route('tutor.lecture.store') }}" method="POST">
         @csrf
         <div class="form-group">
             <label for="teacher_name">Teacher Name</label>

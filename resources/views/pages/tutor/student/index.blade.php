@@ -1,25 +1,25 @@
-@extends('layout.admin')
+@extends('layout.tutor')
 
 @section('content')
     <div class="container">
-        <h1>Tutors</h1>
-        <a href="{{ route('admin.tutors.create') }}" class="btn btn-primary mb-3">Add Tutor</a>
+        <h1>Students</h1>
+        <a href="{{ route('tutor.student.create') }}" class="btn btn-primary mb-3">Add Student</a>
         <table class="table">
             <thead>
             <tr>
+                <th>ID</th>
                 <th>Name</th>
-                <th>Phone</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
-            @foreach ($tutors as $tutor)
+            @foreach ($students as $student)
                 <tr>
-                    <td>{{ $tutor->name }}</td>
-                    <td>{{ $tutor->phone }}</td>
+                    <td>{{ $student->id }}</td>
+                    <td>{{ $student->full_name }}</td>
                     <td>
-                        <a href="{{ route('admin.tutors.edit', $tutor->phone) }}" class="btn btn-primary">Edit</a>
-                        <form action="{{ route('admin.tutors.destroy', $tutor->phone) }}" method="POST"
+                        <a href="{{ route('tutor.student.edit', $student->id) }}" class="btn btn-primary">Edit</a>
+                        <form action="{{ route('tutor.student.destroy', $student->id) }}" method="POST"
                               class="d-inline">
                             @csrf
                             @method('DELETE')

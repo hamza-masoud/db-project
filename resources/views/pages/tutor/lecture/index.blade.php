@@ -1,9 +1,9 @@
-@extends('layout.admin')
+@extends('layout.tutor')
 
 @section('content')
     <h1>Courses</h1>
 
-    <a href="{{ route('admin.courses.create') }}" class="btn btn-primary">Create Course</a>
+    <a href="{{ route('tutor.lecture.create') }}" class="btn btn-primary">Create lecture</a>
 
     <table class="table mt-3">
         <thead>
