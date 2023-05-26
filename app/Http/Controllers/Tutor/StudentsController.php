@@ -45,6 +45,8 @@ class StudentsController extends Controller
             'full_name' => 'required|string|max:200',
             'phone' => 'required|unique:phones,number',
             'id' => 'required|unique:students,id',
+            'courses' => 'required|array|min:1',
+            'courses.*' => 'required|exists:courses,id',
         ]);
 
         $student = new Student();
@@ -52,7 +54,7 @@ class StudentsController extends Controller
         $student->id = $request->input('id');
         $student->gender = $request->input('phone');
         $student->save();
-        $student->courses()->sync($request->input('course'));
+        $student->courses()->sync($request->input('courses'));
 
         return redirect()->route('tutor.student.index')->with('success', 'Student created successfully.');
     }

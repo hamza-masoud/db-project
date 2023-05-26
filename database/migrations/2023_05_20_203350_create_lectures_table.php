@@ -18,6 +18,7 @@ class CreateLecturesTable extends Migration
             $table->unsignedBigInteger('course_id');
             $table->string('title');
             $table->text('description');
+            $table->string('room_number');
             $table->timestamps();
 
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');

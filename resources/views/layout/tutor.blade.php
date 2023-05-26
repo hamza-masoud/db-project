@@ -10,6 +10,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
 
+    <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 
 </head>
 <body>
@@ -42,7 +44,7 @@
     $(document).ready(function () {
         $('.select2-course').select2({
             ajax: {
-                url: '/admin/select2-courses',
+                url: '/tutor/select2-courses',
                 dataType: 'json',
                 delay: 250,
                 processResults: function (data) {
@@ -60,6 +62,11 @@
         });
     });
 
+
+    var $disabledResults = $(".select2-simple");
+    $disabledResults.select2();
 </script>
+
+@yield('js')
 </body>
 </html>

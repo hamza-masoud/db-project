@@ -20,6 +20,7 @@
             <div class="form-group my-2">
                 <label for="courses">Courses</label>
                 <select id="courses" name="courses[]" multiple class="form-control select2-course">
+
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Create</button>

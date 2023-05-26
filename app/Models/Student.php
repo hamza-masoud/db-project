@@ -20,6 +20,12 @@ class Student extends Model
 
     public function lectures()
     {
-        return $this->belongsToMany(Lecture::class)->withPivot('presence')->withTimestamps();
+        return $this->belongsToMany(Lecture::class)->withTimestamps();
+    }
+
+
+    public function phones()
+    {
+        return $this->hasMany(Phone::class);
     }
 }

@@ -16,7 +16,6 @@ class CreateLectureStudentTable extends Migration
         Schema::create('lecture_student', function (Blueprint $table) {
             $table->unsignedBigInteger('lecture_id');
             $table->string('student_id');
-            $table->boolean('presence')->default(false);
             $table->timestamps();
 
             $table->foreign('lecture_id')->references('id')->on('lectures')->onDelete('cascade');

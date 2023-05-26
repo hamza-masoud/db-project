@@ -41,6 +41,8 @@ Route::prefix('tutor')->as('tutor.')->group(function (){
 
         Route::resource('student', Tutor\StudentsController::class);
         Route::get('/select2-courses', [Tutor\Select2Controller::class, 'getCourses']);
-        Route::resource('lecture', Tutor\CourseController::class);
+        Route::resource('lecture', Tutor\LectureController::class);
+        Route::post('/lecture/{id}/upload_file', [Tutor\LectureController::class, 'upload_file'])->name('lecture.upload-file');
+
     });
 });
